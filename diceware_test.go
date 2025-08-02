@@ -12,13 +12,13 @@ func TestSampleWords(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	words, err := g.SampleWords(3)
+	words, err := g.SampleWords(5)
 	if err != nil {
 		t.Fatal(err)
 	}
 	slices.Sort(words)
 	words = slices.Compact(words)
-	if got, want := len(words), 3; got != want {
+	if got, want := len(words), 5; got != want {
 		t.Errorf("len(words)=%v, want=%v", got, want)
 	}
 	t.Logf("%q\n", words)

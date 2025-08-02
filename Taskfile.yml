@@ -11,6 +11,10 @@ tasks:
       TINYGOROOT:
         sh: tinygo env TINYGOROOT
 
+  test:
+    cmds:
+      - go test -race -count=1 .
+
   serve:
     cmds:
       - go run github.com/eliben/static-server@latest
