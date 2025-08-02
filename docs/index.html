@@ -72,11 +72,22 @@
           </article>
           <section>
             <h3>Passphrase</h3>
-            <div
-              x-data="{ delim: '-', styles: { textAlign: 'center', textTransform: 'lowercase' } }"
-            >
+            <div x-data="{ style: 'lowercase', delim: '-' }">
               <article>
-                <div x-bind:style="styles" x-text="words.join(delim)"></div>
+                <div
+                  x-text="words.map(word => {
+                  if (word.length === 0) {
+                  return '';
+                  } else if (style === 'lowercase') {
+                  return word.toLowerCase();
+                  } else if (style === 'uppercase') {
+                  return word.toUpperCase();
+                  } else if (style=== 'capitalize'){
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                  }
+                  return word;
+                  }).join(delim)"
+                ></div>
                 <template x-if="words.length === 0">
                   <small>Click the Generate button.</small>
                 </template>
@@ -89,7 +100,7 @@
                     type="radio"
                     name="style"
                     value="lowercase"
-                    x-model="styles.textTransform"
+                    x-model="style"
                     checked
                   />
                   <label for="lowercase" style="text-transform: lowercase"
@@ -100,7 +111,7 @@
                     type="radio"
                     name="style"
                     value="uppercase"
-                    x-model="styles.textTransform"
+                    x-model="style"
                   />
                   <label for="uppercase" style="text-transform: uppercase"
                     >Uppercase</label
@@ -110,7 +121,7 @@
                     type="radio"
                     name="style"
                     value="capitalize"
-                    x-model="styles.textTransform"
+                    x-model="style"
                   />
                   <label for="capitalize" style="text-transform: capitalize"
                     >Capitalize</label
@@ -135,6 +146,15 @@
                     x-model="delim"
                   />
                   <label for="underscore"><kbd>_</kbd></label>
+                  <input
+                    id="comma"
+                    type="radio"
+                    name="delim"
+                    value=","
+                    x-model="delim"
+                    checked
+                  />
+                  <label for="comma"><kbd>,</kbd></label>
                   <input
                     id="slash"
                     type="radio"
