@@ -80,44 +80,72 @@
                 <fieldset>
                   <legend>Style:</legend>
                   <input
+                    id="lowercase"
                     type="radio"
                     name="style"
                     value="lowercase"
                     x-model="styles.textTransform"
                     checked
                   />
-                  <label style="text-transform: lowercase">Lowercase</label>
+                  <label for="lowercase" style="text-transform: lowercase"
+                    >Lowercase</label
+                  >
                   <input
+                    id="uppercase"
                     type="radio"
                     name="style"
                     value="uppercase"
                     x-model="styles.textTransform"
                   />
-                  <label style="text-transform: uppercase">Uppercase</label>
+                  <label for="uppercase" style="text-transform: uppercase"
+                    >Uppercase</label
+                  >
                   <input
+                    id="capitalize"
                     type="radio"
                     name="style"
                     value="capitalize"
                     x-model="styles.textTransform"
                   />
-                  <label style="text-transform: capitalize">Capitalize</label>
+                  <label for="capitalize" style="text-transform: capitalize"
+                    >Capitalize</label
+                  >
                 </fieldset>
                 <fieldset>
                   <legend>Delimiter:</legend>
                   <input
+                    id="hyphen"
                     type="radio"
                     name="delim"
                     value="-"
                     x-model="delim"
                     checked
                   />
-                  <label><kbd>-</kbd></label>
-                  <input type="radio" name="delim" value="_" x-model="delim" />
-                  <label><kbd>_</kbd></label>
-                  <input type="radio" name="delim" value="/" x-model="delim" />
-                  <label><kbd>/</kbd></label>
-                  <input type="radio" name="delim" value=":" x-model="delim" />
-                  <label><kbd>:</kbd></label>
+                  <label for="hyphen"><kbd>-</kbd></label>
+                  <input
+                    id="underscore"
+                    type="radio"
+                    name="delim"
+                    value="_"
+                    x-model="delim"
+                  />
+                  <label for="underscore"><kbd>_</kbd></label>
+                  <input
+                    id="slash"
+                    type="radio"
+                    name="delim"
+                    value="/"
+                    x-model="delim"
+                  />
+                  <label for="slash"><kbd>/</kbd></label>
+                  <input
+                    id="colon"
+                    type="radio"
+                    name="delim"
+                    value=":"
+                    x-model="delim"
+                  />
+                  <label for="colon"><kbd>:</kbd></label>
                 </fieldset>
               </div>
             </div>
