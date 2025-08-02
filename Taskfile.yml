@@ -3,6 +3,15 @@
 version: "3"
 
 tasks:
+  tidy:
+    cmds:
+      - go mod tidy
+      - go mod verify
+      - go fmt .
+      - go vet .
+      - go run golang.org/x/vuln/cmd/govulncheck@latest .
+      - go run honnef.co/go/tools/cmd/staticcheck@latest -checks=all,-ST1000 .
+
   build:
     cmds:
       - cp {{.TINYGOROOT}}/targets/wasm_exec.js ./docs/
