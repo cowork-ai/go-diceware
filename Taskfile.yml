@@ -5,11 +5,11 @@ version: "3"
 tasks:
   build:
     cmds:
-      - cp {{.GOROOT}}/lib/wasm/wasm_exec.js ./public/
-      - GOOS=js GOARCH=wasm go build -o=./public/main.wasm ./cmd/wasm
+      - cp {{.TINYGOROOT}}/targets/wasm_exec.js ./docs/
+      - GOOS=js GOARCH=wasm tinygo build -o=./docs/main.wasm ./cmd/wasm
     vars:
-      GOROOT:
-        sh: go env GOROOT
+      TINYGOROOT:
+        sh: tinygo env TINYGOROOT
 
   serve:
     cmds:

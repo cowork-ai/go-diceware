@@ -2,43 +2,41 @@ package main
 
 import (
 	"bytes"
-	"log"
 	"strconv"
 	"syscall/js"
 
 	"github.com/cowork-ai/go-diceware"
 )
 
-func main() {
-	s, err := diceware.NewSamplerFromEFFWordlist(bytes.NewReader(diceware.EFFLargeWordlist))
-	if err != nil {
-		log.Fatal(err)
-	}
-	js.Global().Set("sampleWords", sampleWordsWrapper(s))
-	<-make(chan struct{})
-}
-
 type Sampler interface {
 	SampleWords(n int) ([]string, error)
 }
 
-func sampleWordsWrapper(s Sampler) js.Func {
-	return js.FuncOf(func(this js.Value, args []js.Value) any {
-		if len(args) != 1 {
-			return "Invalid no of arguments passed"
-		}
-		n, err := strconv.Atoi(args[0].String())
-		if err != nil {
-			return err.Error()
-		}
-		words, err := s.SampleWords(n)
-		if err != nil {
-			return err.Error()
-		}
-		array := make([]interface{}, len(words))
-		for i, w := range words {
-			array[i] = w
-		}
-		return js.ValueOf(array)
-	})
+var defaultSampler = func() Sampler {
+	s, err := diceware.NewSamplerFromEFFWordlist(bytes.NewReader(diceware.EFFLargeWordlist))
+	if err != nil {
+		panic(err)
+	}
+	return s
+}()
+
+func main() {
+	js.Global().Set("sampleWords", js.FuncOf(sampleWords))
+	select {}
+}
+
+func sampleWords(this js.Value, args []js.Value) interface{} {
+	n, err := strconv.Atoi(args[0].String())
+	if err != nil {
+		panic(err)
+	}
+	words, err := defaultSampler.SampleWords(n)
+	if err != nil {
+		panic(err)
+	}
+	result := make([]interface{}, len(words))
+	for i, word := range words {
+		result[i] = word
+	}
+	return js.ValueOf(result)
 }
