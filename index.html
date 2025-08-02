@@ -12,5 +12,14 @@
       });
     </script>
   </head>
-  <body></body>
+  <body>
+    <input type="number" id="number" />
+    <input type="submit" onclick="sample(number.value)" />
+    <textarea id="sampleoutput"></textarea>
+  </body>
+  <script>
+    var sample = function (input) {
+      sampleoutput.value = sampleWords(input);
+    };
+  </script>
 </html>
