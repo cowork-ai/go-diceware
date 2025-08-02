@@ -5,7 +5,11 @@ version: "3"
 tasks:
   build:
     cmds:
-      - GOOS=js GOARCH=wasm go build -o=main.wasm
+      - cp {{.GOROOT}}/lib/wasm/wasm_exec.js ./public/
+      - GOOS=js GOARCH=wasm go build -o=./public/main.wasm ./cmd/wasm
+    vars:
+      GOROOT:
+        sh: go env GOROOT
 
   serve:
     cmds:

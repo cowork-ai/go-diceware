@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      WebAssembly.instantiateStreaming(
+        fetch("main.wasm"),
+        go.importObject,
+      ).then((result) => {
+        go.run(result.instance);
+      });
+    </script>
+    <title>Go Diceware</title>
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>go-diceware</h1>
+        <p>Random Passpharse Generator</p>
+      </hgroup>
+    </header>
+    <main class="container">
+      <p>
+        https://en.wikipedia.org/wiki/Diceware EFF wordlists EFF's Long Wordlist
+        https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt
+      </p>
+      <div x-data="{ words: [] }">
+        <input type="number" id="numWords" />
+        <button x-on:click="words = sampleWords(numWords.value)">Sample</button>
+        <div x-data="{ delim: '-', styles: {textTransform: 'lowercase'} }">
+          <input x-model="delim" type="text" />
+          <select x-model="styles.textTransform" required>
+            <option selected value="lowercase">Lowercase</option>
+            <option value="uppercase">Uppercase</option>
+            <option value="capitalize">Capitalize</option>
+          </select>
+          <p x-bind:style="styles" x-text="words.join(delim)"></p>
+          <fieldset>
+            <legend>Second language:</legend>
+            <input type="radio" id="hindi" name="second-language" checked />
+            <label htmlFor="hindi">Hindi</label>
+            <input type="radio" id="swahili" name="second-language" />
+            <label htmlFor="swahili">Swahili</label>
+            <input type="radio" id="navi" name="second-language" />
+            <label htmlFor="navi">Na'vi</label>
+          </fieldset>
+          <ul>
+            <template x-for="word in words">
+              <li x-text="word"></li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </main>
+    <footer class="container">
+      <a href="https://github.com/cowork-ai/go-diceware">GitHub</a>
+    </footer>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-package main
+package diceware
 
 import (
 	"crypto/rand"
@@ -9,7 +9,7 @@ import (
 )
 
 //go:embed eff_large_wordlist.txt
-var effLargeWordlist []byte
+var EFFLargeWordlist []byte
 
 type wordSampler struct {
 	words     []string

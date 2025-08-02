@@ -5,10 +5,12 @@ import (
 	"log"
 	"strconv"
 	"syscall/js"
+
+	"github.com/cowork-ai/go-diceware"
 )
 
 func main() {
-	s, err := NewSamplerFromEFFWordlist(bytes.NewReader(effLargeWordlist))
+	s, err := diceware.NewSamplerFromEFFWordlist(bytes.NewReader(diceware.EFFLargeWordlist))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -16,7 +18,11 @@ func main() {
 	<-make(chan struct{})
 }
 
-func sampleWordsWrapper(s *wordSampler) js.Func {
+type Sampler interface {
+	SampleWords(n int) ([]string, error)
+}
+
+func sampleWordsWrapper(s Sampler) js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) any {
 		if len(args) != 1 {
 			return "Invalid no of arguments passed"

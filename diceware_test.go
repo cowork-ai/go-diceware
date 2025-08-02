@@ -1,4 +1,4 @@
-package main
+package diceware
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestSampleWords(t *testing.T) {
-	g, err := NewSamplerFromEFFWordlist(bytes.NewReader(effLargeWordlist))
+	g, err := NewSamplerFromEFFWordlist(bytes.NewReader(EFFLargeWordlist))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -23,7 +23,7 @@ func TestSampleWords(t *testing.T) {
 	}
 	t.Logf("%q\n", words)
 	for _, word := range words {
-		if got, want := strings.Contains(string(effLargeWordlist), word), true; got != want {
+		if got, want := strings.Contains(string(EFFLargeWordlist), word), true; got != want {
 			t.Errorf("Contains(word)=%v, want=%v", got, want)
 		}
 	}
